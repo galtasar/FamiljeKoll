@@ -17,7 +17,7 @@ Inspirerat av CareCalendar (veckokalender, återkommande uppgifter) men varmare 
 - Status: **klar / inte klar**. Aktivitet vars datum passerat och som inte är klar visas som "försenad" (endast visuellt, lagras inte).
 - Poäng: aktivitet har valfria poäng (0 = inga). Poäng räknas per medlem.
 - Vyer: **Idag**, **Vecka** (mån–sön), **Kommande** (lista).
-- Filter: per medlem och kategori.
+- Inga filter (medvetet borttagna för enkelhetens skull).
 - Inloggning med Google eller Microsoft; endast tillåtna e-postadresser får in.
 
 ### Ingår inte (medvetet)

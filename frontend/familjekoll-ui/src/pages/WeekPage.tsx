@@ -10,15 +10,14 @@ import dayjs from 'dayjs'
 import { useFamily } from '../family'
 import { useRange } from '../hooks'
 import { ActivityCard } from '../ActivityCard'
-import { FilterBar } from '../lists'
 import { ISO, startOfWeek, today } from '../dates'
 
 export function WeekPage() {
-  const { applyFilters, openActivity } = useFamily()
+  const { openActivity } = useFamily()
   const [start, setStart] = useState(() => startOfWeek(dayjs()))
   const end = start.add(6, 'day')
   const q = useRange(start.format(ISO), end.format(ISO))
-  const list = applyFilters(q.data ?? [])
+  const list = q.data ?? []
   const days = Array.from({ length: 7 }, (_, i) => start.add(i, 'day'))
   const t = today()
 
@@ -35,7 +34,6 @@ export function WeekPage() {
           <IconButton aria-label="Nästa vecka" onClick={() => setStart(start.add(1, 'week'))}><ChevronRightRoundedIcon /></IconButton>
         </Stack>
       </Stack>
-      <FilterBar />
       {q.isLoading && <Box textAlign="center"><CircularProgress /></Box>}
       {q.error && <Alert severity="error">Kunde inte hämta aktiviteter.</Alert>}
       <Box display="grid" gap={1.25} gridTemplateColumns={{ xs: '1fr', lg: 'repeat(7, minmax(0, 1fr))' }}>
