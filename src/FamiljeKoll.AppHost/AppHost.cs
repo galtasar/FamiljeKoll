@@ -8,6 +8,7 @@ var db = sql.AddDatabase("DefaultConnection", "FamiljeKoll");
 var api = builder.AddProject<Projects.FamiljeKoll_Api>("api")
     .WithReference(db)
     .WaitFor(db)
+    .WithEnvironment("Authentication__DisableAuth", "true") // local development only
     .WithExternalHttpEndpoints();
 
 builder.AddViteApp("ui", "../../frontend/familjekoll-ui")
