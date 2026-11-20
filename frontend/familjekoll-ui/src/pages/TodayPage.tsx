@@ -3,15 +3,13 @@ import {
 } from '@mui/material'
 import { Box, Stack, Typography } from '../ui'
 import dayjs from 'dayjs'
-import { useFamily } from '../family'
 import { useRange } from '../hooks'
 import { ActivityCard } from '../ActivityCard'
-import { FilterBar, SectionTitle } from '../lists'
+import { SectionTitle } from '../lists'
 import { Empty } from '../bits'
 import { ISO, today } from '../dates'
 
 export function TodayPage() {
-  const { applyFilters } = useFamily()
   const t = today()
   // Include the last two weeks so that missed things are still visible.
   const q = useRange(dayjs().subtract(14, 'day').format(ISO), t)
@@ -19,7 +17,7 @@ export function TodayPage() {
   if (q.isLoading) return <Box textAlign="center" py={6}><CircularProgress /></Box>
   if (q.error) return <Alert severity="error">Kunde inte hämta aktiviteter.</Alert>
 
-  const all = applyFilters(q.data ?? [])
+  const all = q.data ?? []
   const todays = all.filter((a) => a.date === t)
   const overdue = all.filter((a) => a.date < t && !a.isDone)
   const done = todays.filter((a) => a.isDone).length
@@ -39,7 +37,6 @@ export function TodayPage() {
           </Box>
         )}
       </Box>
-      <FilterBar />
       {allDone && <Alert severity="success" variant="outlined">Allt klart för idag. Bra jobbat!</Alert>}
       {overdue.length > 0 && (
         <Box>
