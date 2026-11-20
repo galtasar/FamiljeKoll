@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="sv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Förslag B – Sidomeny och kort</title>
+<style>
+*{box-sizing:border-box;margin:0}
+body{font:16px/1.5 Inter,system-ui,Segoe UI,sans-serif;background:#f5f6f8;color:#20242c;display:flex;min-height:100vh}
+aside{width:230px;background:#fff;border-right:1px solid #e6e8ed;padding:24px 14px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:100vh}
+.logo{font-weight:700;font-size:18px;padding:0 12px 18px;letter-spacing:-.02em;color:#1f6f5c}
+aside a{padding:10px 12px;border-radius:10px;color:#566070;font-weight:500;display:flex;gap:10px;align-items:center}
+aside a.on{background:#e7f3ef;color:#1f6f5c}
+aside a svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
+.who{margin-top:auto;padding:12px;font-size:13px;color:#7a8190}
+main{flex:1;padding:32px;max-width:980px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;gap:12px;flex-wrap:wrap}
+h1{font-size:26px;font-weight:700;letter-spacing:-.02em}
+.btn{background:#1f6f5c;color:#fff;padding:10px 18px;border-radius:10px;font-weight:600;font-size:15px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
+.stat{background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 1px 2px rgba(20,30,50,.06)}
+.stat b{font-size:26px;display:block}.stat span{font-size:13px;color:#7a8190}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.card{background:#fff;border-radius:14px;padding:16px;box-shadow:0 1px 2px rgba(20,30,50,.06);border-left:4px solid var(--c);display:flex;flex-direction:column;gap:10px}
+.card .tag{font-size:12px;font-weight:600;color:var(--c);text-transform:uppercase;letter-spacing:.05em}
+.card .t{font-weight:600}
+.card .foot{display:flex;justify-content:space-between;align-items:center}
+.av{display:flex}.av span{width:28px;height:28px;border-radius:50%;color:#fff;font-size:12px;font-weight:600;display:grid;place-items:center;margin-left:-6px;border:2px solid #fff}
+.av span:first-child{margin-left:0}
+.done-btn{font-size:13px;font-weight:600;border:1.5px solid #cfd4dc;border-radius:8px;padding:5px 12px;color:#445}
+.card.done{opacity:.6}.card.done .t{text-decoration:line-through}
+.card.done .done-btn{background:#1f6f5c;border-color:#1f6f5c;color:#fff}
+h2{font-size:14px;color:#7a8190;font-weight:600;margin:26px 0 10px}
+@media(max-width:760px){body{flex-direction:column}aside{position:fixed;bottom:0;top:auto;width:100%;height:auto;flex-direction:row;justify-content:space-around;padding:6px;z-index:5;border-top:1px solid #e6e8ed;border-right:0}
+.logo,.who{display:none}aside a{flex-direction:column;gap:2px;font-size:11px;padding:6px 10px}main{padding:20px 16px 90px}.stats{grid-template-columns:repeat(3,1fr);gap:8px}.stat{padding:12px}.stat b{font-size:20px}}
+</style></head><body>
+<aside><div class="logo">FamiljeKoll</div>
+<a class="on"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Idag</a>
+<a><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Vecka</a>
+<a><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Kommande</a>
+<a><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-4 3-6 6-6s6 2 6 6M17 11a3 3 0 100-6M21 20c0-3-1.5-5-4-5.5"/></svg>Familj</a>
+<div class="who">anna@exempel.se</div></aside>
+<main>
+<div class="top"><h1>Idag · fredag 20 nov</h1><span class="btn">+ Ny aktivitet</span></div>
+<div class="stats"><div class="stat"><b>2</b><span>Kvar</span></div><div class="stat"><b>3</b><span>Klara</span></div><div class="stat"><b>18</b><span>Poäng idag</span></div></div>
+<h2>Att göra</h2>
+<div class="grid">
+<div class="card" style="--c:#8a63d2"><span class="tag">Bil</span><span class="t">Byt däck på bilen</span><div class="foot"><span class="av"><span style="background:#3b82c4">E</span></span><span class="done-btn">Markera klar</span></div></div>
+<div class="card" style="--c:#2f9e6f"><span class="tag">Skola</span><span class="t">Ta med matlåda till utflykten</span><div class="foot"><span class="av"><span style="background:#e2a336">L</span></span><span class="done-btn">Markera klar</span></div></div>
+</div>
+<h2>Klart</h2>
+<div class="grid">
+<div class="card done" style="--c:#e0694f"><span class="tag">Hem</span><span class="t">Vattna blommorna</span><div class="foot"><span class="av"><span style="background:#e0694f">A</span></span><span class="done-btn">✓ Klar</span></div></div>
+<div class="card done" style="--c:#e0694f"><span class="tag">Hem</span><span class="t">Städa köket</span><div class="foot"><span class="av"><span style="background:#e0694f">A</span><span style="background:#3b82c4">E</span></span><span class="done-btn">✓ Klar</span></div></div>
+<div class="card done" style="--c:#e2a336"><span class="tag">Hem</span><span class="t">Ta ut soporna</span><div class="foot"><span class="av"><span style="background:#e2a336">L</span></span><span class="done-btn">✓ Klar</span></div></div>
+</div>
+</main></body></html>
