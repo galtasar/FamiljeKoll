@@ -22,5 +22,19 @@
     <ProjectReference Include="..\FamiljeKoll.Domain\FamiljeKoll.Domain.csproj" />
     <ProjectReference Include="..\FamiljeKoll.ServiceDefaults\FamiljeKoll.ServiceDefaults.csproj" />
   </ItemGroup>
+<!-- Release builds/publishes (e.g. Rider "Publish") also build the React app and publish it as wwwroot. -->
+  <Target Name="PublishFrontend" BeforeTargets="AssignTargetPaths"
+          Condition="'$(Configuration)' == 'Release' And '$(SkipFrontendBuild)' != 'true'">
+    <PropertyGroup>
+      <FrontendDir>$(MSBuildThisFileDirectory)..\..\frontend\familjekoll-ui</FrontendDir>
+    </PropertyGroup>
+    <Exec Command="npm ci" WorkingDirectory="$(FrontendDir)" />
+    <Exec Command="npm run build" WorkingDirectory="$(FrontendDir)" />
+    <ItemGroup>
+    <FrontendDist Include="$(FrontendDir)\dist\**" />
+    <Content Include="@(FrontendDist)" Link="wwwroot\%(RecursiveDir)%(Filename)%(Extension)"
+             TargetPath="wwwroot\%(RecursiveDir)%(Filename)%(Extension)" CopyToPublishDirectory="PreserveNewest" />
+    </ItemGroup>
+  </Target>
 
 </Project>
