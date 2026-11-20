@@ -20,9 +20,14 @@ builder.Services.Configure<ForwardedHeadersOptions>(o =>
 
 builder.AddFamilyAuth();
 
+// Running the Api on its own (without Aspire) in Development falls back to SQL Server LocalDB.
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+if (string.IsNullOrWhiteSpace(connectionString) && builder.Environment.IsDevelopment())
+    connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=FamiljeKoll;Trusted_Connection=True;TrustServerCertificate=True";
+
 builder.Services.AddDbContext<FamiljeKollDbContext>(options =>
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
+        connectionString,
         sql => sql.EnableRetryOnFailure(maxRetryCount: 6, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null)));
 
 builder.Services.AddSingleton(TimeProvider.System);
