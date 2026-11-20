@@ -1,0 +1,17 @@
+<Project Sdk="Aspire.AppHost.Sdk/17.0.0">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net11.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>40efffb3-2306-429e-9172-3406bdbb974c</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.JavaScript" Version="17.0.0" />
+    <PackageReference Include="Aspire.Hosting.SqlServer" Version="17.0.0" />
+    <ProjectReference Include="..\FamiljeKoll.Api\FamiljeKoll.Api.csproj" />
+  </ItemGroup>
+
+</Project>

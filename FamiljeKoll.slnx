@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/FamiljeKoll.Api/FamiljeKoll.Api.csproj" />
+    <Project Path="src/FamiljeKoll.Domain/FamiljeKoll.Domain.csproj" />
+    <Project Path="src/FamiljeKoll.Repository/FamiljeKoll.Repository.csproj" />
+    <Project Path="src/FamiljeKoll.Service/FamiljeKoll.Service.csproj" />
+    <Project Path="src/FamiljeKoll.ServiceDefaults/FamiljeKoll.ServiceDefaults.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/FamiljeKoll.Api.IntegrationTests/FamiljeKoll.Api.IntegrationTests.csproj" />
+    <Project Path="tests/FamiljeKoll.Service.UnitTests/FamiljeKoll.Service.UnitTests.csproj" />
+  </Folder>
+</Solution>
