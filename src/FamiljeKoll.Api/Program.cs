@@ -20,10 +20,11 @@ builder.Services.Configure<ForwardedHeadersOptions>(o =>
 
 builder.AddFamilyAuth();
 
-// Running the Api on its own (without Aspire) in Development falls back to SQL Server LocalDB.
+// Without Aspire there is no connection string; tell the developer how to get one instead of failing cryptically.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 if (string.IsNullOrWhiteSpace(connectionString) && builder.Environment.IsDevelopment())
-    connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=FamiljeKoll;Trusted_Connection=True;TrustServerCertificate=True";
+    Console.WriteLine("WARNING: No ConnectionStrings:DefaultConnection. Start FamiljeKoll.AppHost (Docker) instead of the Api project, " +
+                      "or set the connection string in appsettings.Development.json.");
 
 builder.Services.AddDbContext<FamiljeKollDbContext>(options =>
     options.UseSqlServer(
