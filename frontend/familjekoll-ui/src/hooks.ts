@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import type { ActivityDto } from './types'
 import { api, type SaveActivity, type SaveCategory, type SaveMember } from './api'
 
 export const useMembers = () => useQuery({ queryKey: ['members'], queryFn: api.members })
@@ -37,6 +38,28 @@ export function useActivityActions() {
       ...opts,
     }),
   }
+}
+
+// Moves a single occurrence to another day. The cache is updated first so the card jumps immediately.
+export function useMoveActivity() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (v: { activity: ActivityDto; date: string }) => {
+      const a = v.activity
+      return api.updateActivity(a.id, {
+        title: a.title, notes: a.notes, date: v.date, points: a.points, categoryId: a.categoryId, memberIds: a.memberIds,
+      })
+    },
+    onMutate: async (v) => {
+      await qc.cancelQueries({ queryKey: ['activities'] })
+      const previous = qc.getQueriesData<ActivityDto[]>({ queryKey: ['activities'] })
+      qc.setQueriesData<ActivityDto[]>({ queryKey: ['activities'] }, (old) =>
+        old?.map((x) => (x.id === v.activity.id ? { ...x, date: v.date } : x)))
+      return { previous }
+    },
+    onError: (_e, _v, ctx) => ctx?.previous.forEach(([key, data]) => qc.setQueryData(key, data)),
+    onSettled: () => Promise.all([qc.invalidateQueries({ queryKey: ['activities'] }), qc.invalidateQueries({ queryKey: ['points'] })]),
+  })
 }
 
 export function useMemberActions() {

@@ -8,7 +8,7 @@ import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded'
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
 import dayjs from 'dayjs'
 import { useFamily } from '../family'
-import { useRange } from '../hooks'
+import { useMoveActivity, useRange } from '../hooks'
 import { ActivityCard } from '../ActivityCard'
 import { ISO, startOfWeek, today } from '../dates'
 
@@ -20,6 +20,14 @@ export function WeekPage() {
   const list = q.data ?? []
   const days = Array.from({ length: 7 }, (_, i) => start.add(i, 'day'))
   const t = today()
+  const move = useMoveActivity()
+  const [dragOver, setDragOver] = useState<string | null>(null)
+  const drop = (e: React.DragEvent, iso: string) => {
+    e.preventDefault()
+    setDragOver(null)
+    const a = list.find((x) => x.id === e.dataTransfer.getData('text/plain'))
+    if (a && a.date !== iso) move.mutate({ activity: a, date: iso })
+  }
 
   return (
     <Stack spacing={2.5}>
@@ -44,9 +52,12 @@ export function WeekPage() {
           return (
             <Box
               key={iso}
+              onDragOver={(e: React.DragEvent) => { e.preventDefault(); setDragOver(iso) }}
+              onDragLeave={(e: React.DragEvent) => { if (!e.currentTarget.contains(e.relatedTarget as Node)) setDragOver(null) }}
+              onDrop={(e: React.DragEvent) => drop(e, iso)}
               sx={{
-                bgcolor: 'background.paper', borderRadius: '12px', p: 1.25, display: 'flex', flexDirection: 'column', gap: 1,
-                minHeight: { lg: 260 }, border: '1px solid', borderColor: isToday ? 'primary.main' : 'divider',
+                bgcolor: dragOver === iso ? '#F1F7F5' : 'background.paper', borderRadius: '12px', p: 1.25, display: 'flex', flexDirection: 'column', gap: 1,
+                minHeight: { lg: 260 }, border: '1px solid', borderColor: dragOver === iso ? 'secondary.main' : isToday ? 'primary.main' : 'divider',
                 boxShadow: isToday ? '0 0 0 1px #25221F' : 'none',
               }}
             >

@@ -62,10 +62,12 @@ export function ActivityCard({ activity: a, compact = false }: { activity: Activ
     <>
       {compact ? (
         <Box
+          draggable
+          onDragStart={(e: React.DragEvent) => { e.dataTransfer.setData('text/plain', a.id); e.dataTransfer.effectAllowed = 'move' }}
           onClick={() => openActivity(a)}
           sx={{
-            display: 'flex', gap: 1, alignItems: 'flex-start', p: '7px 8px', borderRadius: '8px', cursor: 'pointer',
-            bgcolor: `color-mix(in srgb, ${accent} 14%, #fff)`, borderLeft: `3px solid ${accent}`,
+            display: 'flex', gap: 1, alignItems: 'flex-start', p: '7px 8px', borderRadius: '8px',
+            bgcolor: `color-mix(in srgb, ${accent} 14%, #fff)`, borderLeft: `3px solid ${accent}`, cursor: 'grab',
             opacity: a.isDone ? 0.55 : 1,
           }}
         >
