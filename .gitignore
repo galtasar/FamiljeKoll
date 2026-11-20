@@ -1,0 +1,17 @@
+bin/
+obj/
+.vs/
+.idea/
+*.user
+*.suo
+node_modules/
+dist/
+src/FamiljeKoll.Api/wwwroot/*
+!src/FamiljeKoll.Api/wwwroot/.gitkeep
+appsettings.Development.json
+appsettings.Local.json
+.env
+.env.local
+*.log
+publish/
+TestResults/
