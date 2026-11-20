@@ -71,10 +71,9 @@ function Shell() {
           <Stack
             direction={{ xs: 'column', md: 'row' }}
             alignItems={{ xs: 'stretch', md: 'center' }}
-            justifyContent="space-between"
+            justifyContent="flex-start"
             spacing={1.5}
           >
-            <Typography sx={{ fontFamily: 'Georgia, serif', fontSize: 24, fontWeight: 700 }}>FamiljeKoll</Typography>
             <ToggleButtonGroup
               exclusive
               fullWidth={false}
