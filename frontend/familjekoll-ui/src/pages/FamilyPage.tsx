@@ -95,10 +95,15 @@ export function FamilyPage() {
     }
   }
 
-  const deleteCategory = () => {
-    if (editing?.kind !== 'category' || !editing.item) return
-    if (!window.confirm('Ta bort kategorin? Aktiviteter som använder den blir utan kategori.')) return
-    categoryActions.remove.mutate(editing.item.id, opts)
+  const deleteEntity = () => {
+    if (!editing?.item) return
+    if (editing.kind === 'category') {
+      if (!window.confirm('Ta bort kategorin? Aktiviteter som använder den blir utan kategori.')) return
+      categoryActions.remove.mutate(editing.item.id, opts)
+    } else {
+      if (!window.confirm('Ta bort medlemmen för alltid? Hen tas bort från alla aktiviteter och poängen försvinner. Vill du bara dölja hen, använd "Dölj" istället.')) return
+      memberActions.remove.mutate(editing.item.id, opts)
+    }
   }
 
   return (
@@ -147,7 +152,7 @@ export function FamilyPage() {
         initial={initial}
         onClose={close}
         onSave={save}
-        onDelete={editing?.kind === 'category' && editing.item ? deleteCategory : undefined}
+        onDelete={editing?.item ? deleteEntity : undefined}
         error={error}
       />
     </Stack>

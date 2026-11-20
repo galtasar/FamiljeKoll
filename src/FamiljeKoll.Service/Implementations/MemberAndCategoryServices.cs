@@ -26,6 +26,14 @@ public class MemberService(IMemberRepository members) : IMemberService
         return member;
     }
 
+    public async Task<bool> DeleteAsync(Guid id)
+    {
+        var member = await members.GetByIdAsync(id);
+        if (member is null) return false;
+        await members.DeleteAsync(member);
+        return true;
+    }
+
     private static void Apply(Member m, SaveMemberDto dto)
     {
         m.Name = dto.Name.Trim();

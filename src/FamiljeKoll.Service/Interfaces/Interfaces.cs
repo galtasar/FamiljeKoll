@@ -8,6 +8,7 @@ public interface IMemberService
     Task<List<Member>> GetAllAsync(bool includeArchived);
     Task<Member> CreateAsync(SaveMemberDto dto);
     Task<Member?> UpdateAsync(Guid id, SaveMemberDto dto);
+    Task<bool> DeleteAsync(Guid id);
 }
 
 public interface ICategoryService

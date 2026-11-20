@@ -45,6 +45,7 @@ export function useMemberActions() {
   return {
     create: useMutation({ mutationFn: (m: SaveMember) => api.createMember(m), ...opts }),
     update: useMutation({ mutationFn: (v: { id: string; data: SaveMember }) => api.updateMember(v.id, v.data), ...opts }),
+    remove: useMutation({ mutationFn: (id: string) => api.deleteMember(id), ...opts }),
   }
 }
 

@@ -20,6 +20,9 @@ public class MembersController(IMemberService members) : ControllerBase
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] SaveMemberDto dto) =>
         await members.UpdateAsync(id, dto) is { } m ? Ok(m) : NotFound();
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id) => await members.DeleteAsync(id) ? NoContent() : NotFound();
 }
 
 [ApiController]

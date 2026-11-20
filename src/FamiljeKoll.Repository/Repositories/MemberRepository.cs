@@ -9,6 +9,7 @@ public interface IMemberRepository
     Task<Member?> GetByIdAsync(Guid id);
     Task<int> CountExistingAsync(IReadOnlyCollection<Guid> ids);
     Task AddAsync(Member member);
+    Task DeleteAsync(Member member);
     Task SaveAsync();
 }
 
@@ -26,6 +27,15 @@ public class MemberRepository(FamiljeKollDbContext db) : IMemberRepository
     public async Task AddAsync(Member member)
     {
         db.Members.Add(member);
+        await db.SaveChangesAsync();
+    }
+
+    // ActivityMember rows cascade; CompletedByMemberId has no FK so it is cleared explicitly.
+    public async Task DeleteAsync(Member member)
+    {
+        await db.Activities.Where(a => a.CompletedByMemberId == member.Id)
+            .ExecuteUpdateAsync(s => s.SetProperty(a => a.CompletedByMemberId, (Guid?)null));
+        db.Members.Remove(member);
         await db.SaveChangesAsync();
     }
 

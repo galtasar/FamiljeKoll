@@ -51,6 +51,7 @@ export const api = {
   members: () => request<Member[]>('GET', '/api/members?includeArchived=true'),
   createMember: (m: SaveMember) => request<Member>('POST', '/api/members', m),
   updateMember: (id: string, m: SaveMember) => request<Member>('PUT', `/api/members/${id}`, m),
+  deleteMember: (id: string) => request<void>('DELETE', `/api/members/${id}`),
   categories: () => request<Category[]>('GET', '/api/categories'),
   createCategory: (c: SaveCategory) => request<Category>('POST', '/api/categories', c),
   updateCategory: (id: string, c: SaveCategory) => request<Category>('PUT', `/api/categories/${id}`, c),
