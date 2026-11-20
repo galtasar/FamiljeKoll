@@ -1,17 +1,35 @@
 import { useState } from 'react'
-import {
-  Button, Card, CardActionArea, Chip, Dialog, DialogContent, DialogTitle, IconButton,
-} from '@mui/material'
+import { Button, Dialog, DialogContent, DialogTitle, Tooltip } from '@mui/material'
 import { Box, Stack, Typography } from './ui'
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded'
 import RepeatRoundedIcon from '@mui/icons-material/RepeatRounded'
 import { useFamily } from './family'
 import { useActivityActions } from './hooks'
-import { CategoryChip, MemberStack } from './bits'
+import { CategoryChip, MemberStack, PointsTag } from './bits'
 import { isOverdue } from './dates'
 import type { ActivityDto } from './types'
 
-export function ActivityCard({ activity: a }: { activity: ActivityDto }) {
+function Check({ done, size, onClick, disabled }: { done: boolean; size: number; onClick: () => void; disabled?: boolean }) {
+  return (
+    <Box
+      component="button"
+      type="button"
+      aria-label={done ? 'Ångra klar' : 'Markera som klar'}
+      onClick={(e: React.MouseEvent) => { e.stopPropagation(); onClick() }}
+      disabled={disabled}
+      sx={{
+        width: size, height: size, flex: 'none', borderRadius: '50%', p: 0, cursor: 'pointer', display: 'grid', placeItems: 'center',
+        border: '2px solid', borderColor: done ? 'secondary.main' : '#C9C5BD',
+        bgcolor: done ? 'secondary.main' : 'transparent', color: done ? '#fff' : 'transparent',
+        '&:hover': { borderColor: 'secondary.main', color: done ? '#fff' : 'secondary.main' },
+      }}
+    >
+      <CheckRoundedIcon sx={{ fontSize: size * 0.65 }} />
+    </Box>
+  )
+}
+
+export function ActivityCard({ activity: a, compact = false }: { activity: ActivityDto; compact?: boolean }) {
   const { memberById, categoryById, activeMembers, openActivity } = useFamily()
   const { setDone } = useActivityActions()
   const [asking, setAsking] = useState(false)
@@ -19,7 +37,7 @@ export function ActivityCard({ activity: a }: { activity: ActivityDto }) {
   const category = categoryById(a.categoryId)
   const members = a.memberIds.map((id) => memberById(id)).filter((m) => !!m)
   const overdue = isOverdue(a.date, a.isDone)
-  const stripe = category?.color ?? '#C9C3D0'
+  const accent = category?.color ?? '#B9B4AB'
   const doneBy = memberById(a.completedByMemberId)
 
   const toggle = () => {
@@ -29,66 +47,82 @@ export function ActivityCard({ activity: a }: { activity: ActivityDto }) {
     setDone.mutate({ id: a.id, isDone: true, by: null })
   }
 
+  const title = (
+    <Typography
+      sx={{
+        fontWeight: 500, fontSize: compact ? 13 : 16, lineHeight: 1.3, wordBreak: 'break-word',
+        textDecoration: a.isDone ? 'line-through' : 'none',
+      }}
+    >
+      {a.title}
+    </Typography>
+  )
+
   return (
     <>
-      <Card
-        sx={{
-          borderLeft: `8px solid ${stripe}`,
-          opacity: a.isDone ? 0.7 : 1,
-          bgcolor: a.isDone ? '#F1FAF4' : overdue ? '#FFF1EE' : 'background.paper',
-        }}
-      >
-        <Stack direction="row" alignItems="center" spacing={1} p={1.5}>
-          <IconButton
-            aria-label={a.isDone ? 'Ångra klar' : 'Markera som klar'}
-            onClick={toggle}
-            disabled={setDone.isPending}
-            sx={{
-              width: 56,
-              height: 56,
-              border: '3px solid',
-              borderColor: a.isDone ? 'success.main' : 'divider',
-              bgcolor: a.isDone ? 'success.main' : 'transparent',
-              color: a.isDone ? '#fff' : 'transparent',
-              '&:hover': { bgcolor: a.isDone ? 'success.dark' : '#E6F6EC', color: a.isDone ? '#fff' : 'success.main' },
-            }}
-          >
-            <CheckRoundedIcon fontSize="large" />
-          </IconButton>
-          <CardActionArea onClick={() => openActivity(a)} sx={{ flex: 1, borderRadius: 2, p: 0.5 }}>
-            <Typography
-              variant="h6"
-              sx={{ textDecoration: a.isDone ? 'line-through' : 'none', wordBreak: 'break-word', lineHeight: 1.25 }}
-            >
-              {a.title}
+      {compact ? (
+        <Box
+          onClick={() => openActivity(a)}
+          sx={{
+            display: 'flex', gap: 1, alignItems: 'flex-start', p: '7px 8px', borderRadius: '8px', cursor: 'pointer',
+            bgcolor: `color-mix(in srgb, ${accent} 14%, #fff)`, borderLeft: `3px solid ${accent}`,
+            opacity: a.isDone ? 0.55 : 1,
+          }}
+        >
+          <Check done={a.isDone} size={20} onClick={toggle} disabled={setDone.isPending} />
+          <Box minWidth={0} flex={1}>
+            {title}
+            <Typography variant="caption" color="text.secondary" display="block">
+              {members.length ? members.map((m) => m.name).join(', ') : 'Hela familjen'}
+              {a.recurringPatternId ? ' · återkommande' : ''}
+              {overdue ? ' · försenad' : ''}
             </Typography>
-            <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap" useFlexGap mt={0.5}>
-              <MemberStack members={members} />
+          </Box>
+        </Box>
+      ) : (
+        <Box
+          onClick={() => openActivity(a)}
+          sx={{
+            display: 'flex', alignItems: 'center', gap: 1.75, p: 1.75, bgcolor: 'background.paper', cursor: 'pointer',
+            border: '1px solid', borderColor: overdue ? '#EBC9C1' : 'divider', borderLeft: `4px solid ${accent}`, borderRadius: '12px',
+            opacity: a.isDone ? 0.6 : 1,
+            '&:hover': { borderColor: 'text.secondary', borderLeftColor: accent },
+          }}
+        >
+          <Check done={a.isDone} size={28} onClick={toggle} disabled={setDone.isPending} />
+          <Box minWidth={0} flex={1}>
+            {title}
+            <Stack direction="row" spacing={1.5} alignItems="center" flexWrap="wrap" useFlexGap mt={0.5}>
               <CategoryChip category={category} />
-              {a.points > 0 && <Chip size="small" label={`⭐ ${a.points}`} sx={{ bgcolor: '#FFF3C4' }} />}
-              {a.recurringPatternId && <RepeatRoundedIcon fontSize="small" titleAccess="Återkommande" color="action" />}
-              {overdue && <Chip size="small" color="error" label="Försenad" />}
-              {a.isDone && doneBy && <Typography variant="caption">Klar av {doneBy.emoji} {doneBy.name}</Typography>}
+              <MemberStack members={members} />
+              <PointsTag points={a.points} />
+              {a.recurringPatternId && (
+                <Tooltip title="Återkommande"><RepeatRoundedIcon sx={{ fontSize: 16 }} color="action" /></Tooltip>
+              )}
+              {overdue && <Typography variant="caption" color="error" fontWeight={600}>Försenad</Typography>}
+              {a.isDone && doneBy && <Typography variant="caption" color="text.secondary">Klar av {doneBy.name}</Typography>}
             </Stack>
-          </CardActionArea>
-        </Stack>
-      </Card>
+          </Box>
+        </Box>
+      )}
 
       <Dialog open={asking} onClose={() => setAsking(false)}>
-        <DialogTitle>Vem gjorde det? 🙋</DialogTitle>
+        <DialogTitle>Vem gjorde det?</DialogTitle>
         <DialogContent>
-          <Box display="grid" gridTemplateColumns="repeat(auto-fill, minmax(120px, 1fr))" gap={1.5} pb={1}>
+          <Box display="grid" gridTemplateColumns="repeat(auto-fill, minmax(110px, 1fr))" gap={1.5} pb={1}>
             {activeMembers.map((m) => (
               <Button
                 key={m.id}
-                variant="contained"
+                variant="outlined"
                 onClick={() => {
                   setAsking(false)
                   setDone.mutate({ id: a.id, isDone: true, by: m.id })
                 }}
-                sx={{ bgcolor: m.color, color: '#2D2A32', flexDirection: 'column', py: 1.5, borderRadius: '20px', '&:hover': { bgcolor: m.color, filter: 'brightness(.95)' } }}
+                sx={{ flexDirection: 'column', py: 1.5, gap: 0.75, color: 'text.primary', borderColor: 'divider' }}
               >
-                <span style={{ fontSize: 32 }}>{m.emoji}</span>
+                <Box sx={{ width: 40, height: 40, borderRadius: '50%', bgcolor: m.color, color: '#fff', display: 'grid', placeItems: 'center', fontWeight: 600 }}>
+                  {m.name.trim().charAt(0).toUpperCase()}
+                </Box>
                 {m.name}
               </Button>
             ))}

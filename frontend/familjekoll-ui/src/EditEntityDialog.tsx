@@ -4,7 +4,7 @@ import {
 } from '@mui/material'
 import { Box, Stack, Typography } from './ui'
 
-const COLORS = ['#FFB3A7', '#FFD27F', '#FFF08A', '#B8E986', '#8FE0C8', '#8CD3F5', '#B3B8FF', '#E3B5F5', '#FFB5D8', '#D5C4B0']
+const COLORS = ['#E0694F', '#E2A336', '#C9B22B', '#5FA55A', '#2F9E8F', '#3B82C4', '#6C6FD1', '#8A63D2', '#D2639B', '#9A8A78']
 const MEMBER_EMOJIS = ['👩', '👨', '👧', '👦', '👶', '🧒', '👵', '👴', '🐶', '🐱', '🦊', '🐼', '🦄', '🐸']
 const CATEGORY_EMOJIS = ['🏠', '🧹', '🌱', '🚗', '🎒', '🍽️', '📌', '🛒', '🧺', '🐾', '⚽', '🎉', '💊', '📚', '🧸', '🔧']
 

@@ -11,7 +11,7 @@ export function UpcomingPage() {
   const q = useUpcoming()
   return (
     <Stack spacing={2}>
-      <Typography variant="h4">Kommande 🗓️</Typography>
+      <Typography variant="h4">Kommande</Typography>
       <FilterBar />
       {q.isLoading && <Box textAlign="center"><CircularProgress /></Box>}
       {q.error && <Alert severity="error">Kunde inte hämta aktiviteter.</Alert>}

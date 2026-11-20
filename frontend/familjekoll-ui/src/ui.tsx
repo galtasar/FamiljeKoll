@@ -6,7 +6,7 @@ import { Box as MuiBox, Stack as MuiStack, Typography as MuiTypography } from '@
 const SYSTEM_KEYS = [
   'm', 'mt', 'mb', 'ml', 'mr', 'mx', 'my', 'p', 'pt', 'pb', 'pl', 'pr', 'px', 'py',
   'display', 'alignItems', 'justifyContent', 'flex', 'flexWrap', 'gap', 'width', 'minHeight', 'height',
-  'textAlign', 'textTransform', 'fontSize', 'fontWeight', 'gridTemplateColumns', 'color', 'bgcolor', 'overflow', 'maxWidth',
+  'textAlign', 'textTransform', 'fontSize', 'fontWeight', 'gridTemplateColumns', 'color', 'bgcolor', 'overflow', 'maxWidth', 'minWidth',
 ] as const
 
 type SystemProps = Partial<Record<(typeof SYSTEM_KEYS)[number], unknown>>
@@ -25,12 +25,14 @@ function mergeSx(sys: Record<string, unknown>, sx: unknown) {
   return sx && typeof sx === 'object' && !Array.isArray(sx) ? { ...sys, ...sx } : sys
 }
 
-export function Box(props: ComponentProps<typeof MuiBox> & SystemProps) {
+type Polymorphic = { component?: React.ElementType; type?: string; disabled?: boolean }
+
+export function Box(props: ComponentProps<typeof MuiBox> & SystemProps & Polymorphic) {
   const { sys, rest } = split(props)
   return <MuiBox {...(rest as ComponentProps<typeof MuiBox>)} sx={mergeSx(sys, rest.sx) as never} />
 }
 
-export function Stack(props: ComponentProps<typeof MuiStack> & SystemProps) {
+export function Stack(props: ComponentProps<typeof MuiStack> & SystemProps & Polymorphic) {
   const { sys, rest } = split(props)
   return <MuiStack {...(rest as ComponentProps<typeof MuiStack>)} sx={mergeSx(sys, rest.sx) as never} />
 }

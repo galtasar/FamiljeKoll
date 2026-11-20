@@ -33,7 +33,7 @@ function PointsBoard() {
   return (
     <Box>
       <Stack direction="row" justifyContent="space-between" alignItems="center" mb={1}>
-        <Typography variant="h5">Poäng ⭐</Typography>
+        <Typography variant="h5">Poäng</Typography>
         <ToggleButtonGroup size="small" exclusive value={range} onChange={(_, v) => v && setRange(v)}>
           <ToggleButton value="week">Veckan</ToggleButton>
           <ToggleButton value="all">Totalt</ToggleButton>
@@ -44,10 +44,10 @@ function PointsBoard() {
           {rows.length === 0 && <Typography color="text.secondary">Lägg till familjemedlemmar nedan.</Typography>}
           {rows.map(({ m, points }) => (
             <Stack key={m.id} direction="row" alignItems="center" spacing={1.5}>
-              <MemberAvatar member={m} size={40} />
+              <MemberAvatar member={m} size={36} />
               <Box flex={1}>
                 <Typography fontWeight={700}>{m.name}</Typography>
-                <Box sx={{ height: 14, borderRadius: 7, bgcolor: '#F0EAE4', overflow: 'hidden' }}>
+                <Box sx={{ height: 8, borderRadius: 4, bgcolor: '#F0EEE9', overflow: 'hidden' }}>
                   <Box sx={{ height: 1, width: `${(points / max) * 100}%`, bgcolor: m.color, transition: 'width .4s' }} />
                 </Box>
               </Box>
@@ -72,14 +72,14 @@ export function FamilyPage() {
   const opts = { onSuccess: close, onError: fail }
 
   const initial = useMemo<EditValue>(() => {
-    if (!editing) return { name: '', color: '#FFB3A7', emoji: '' }
+    if (!editing) return { name: '', color: '#E0694F', emoji: '' }
     if (editing.kind === 'member')
       return editing.item
         ? { name: editing.item.name, color: editing.item.color, emoji: editing.item.emoji, isArchived: editing.item.isArchived }
-        : { name: '', color: '#FFB3A7', emoji: '👧', isArchived: false }
+        : { name: '', color: '#E0694F', emoji: '👧', isArchived: false }
     return editing.item
       ? { name: editing.item.name, color: editing.item.color, emoji: editing.item.emoji }
-      : { name: '', color: '#8FE0C8', emoji: '📌' }
+      : { name: '', color: '#2F9E8F', emoji: '📌' }
   }, [editing])
 
   const save = (v: EditValue) => {
@@ -108,7 +108,7 @@ export function FamilyPage() {
 
   return (
     <Stack spacing={4}>
-      <Typography variant="h4">Familjen 👨‍👩‍👧‍👦</Typography>
+      <Typography variant="h4">Familjen</Typography>
       <PointsBoard />
 
       <Box>
@@ -122,7 +122,7 @@ export function FamilyPage() {
               key={m.id}
               onClick={() => setEditing({ kind: 'member', item: m })}
               label={`${m.emoji} ${m.name}${m.isArchived ? ' (dold)' : ''}`}
-              sx={{ bgcolor: m.color, color: 'text.primary', minHeight: 44, fontSize: 16, opacity: m.isArchived ? 0.5 : 1 }}
+              sx={{ bgcolor: `color-mix(in srgb, ${m.color} 20%, #fff)`, border: `1px solid ${m.color}`, color: 'text.primary', minHeight: 40, fontSize: 15, opacity: m.isArchived ? 0.5 : 1 }}
             />
           ))}
         </Stack>
@@ -139,7 +139,7 @@ export function FamilyPage() {
               key={c.id}
               onClick={() => setEditing({ kind: 'category', item: c })}
               label={`${c.emoji} ${c.name}`}
-              sx={{ bgcolor: c.color, color: 'text.primary', minHeight: 44, fontSize: 16 }}
+              sx={{ bgcolor: `color-mix(in srgb, ${c.color} 20%, #fff)`, border: `1px solid ${c.color}`, color: 'text.primary', minHeight: 40, fontSize: 15 }}
             />
           ))}
         </Stack>

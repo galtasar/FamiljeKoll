@@ -6,7 +6,8 @@ import dayjs from 'dayjs'
 import { useFamily } from '../family'
 import { useRange } from '../hooks'
 import { ActivityCard } from '../ActivityCard'
-import { FilterBar } from '../lists'
+import { FilterBar, SectionTitle } from '../lists'
+import { Empty } from '../bits'
 import { ISO, today } from '../dates'
 
 export function TodayPage() {
@@ -27,32 +28,32 @@ export function TodayPage() {
   return (
     <Stack spacing={3}>
       <Box>
-        <Typography variant="h4">Idag ☀️</Typography>
-        <Typography color="text.secondary" textTransform="capitalize">{dayjs().format('dddd D MMMM')}</Typography>
+        <Typography variant="h4">Idag</Typography>
+        <Typography color="text.secondary">
+          <span style={{ textTransform: 'capitalize' }}>{dayjs().format('dddd D MMMM')}</span>
+          {todays.length > 0 ? ` · ${done} av ${todays.length} klara` : ''}
+        </Typography>
         {todays.length > 0 && (
-          <Box mt={1.5}>
-            <Box sx={{ height: 12, borderRadius: 6, bgcolor: '#E4DDD6', overflow: 'hidden' }}>
-              <Box sx={{ height: 1, width: `${(done / todays.length) * 100}%`, bgcolor: 'success.main', transition: 'width .4s' }} />
-            </Box>
-            <Typography variant="body2" mt={0.5}>{done} av {todays.length} klara</Typography>
+          <Box sx={{ height: 4, borderRadius: 2, bgcolor: '#ECEAE5', overflow: 'hidden', mt: 1.5, maxWidth: 320 }}>
+            <Box sx={{ height: 1, width: `${(done / todays.length) * 100}%`, bgcolor: 'success.main', transition: 'width .4s' }} />
           </Box>
         )}
       </Box>
       <FilterBar />
-      {allDone && <Alert icon={<span>🎉</span>} severity="success" sx={{ fontSize: 18 }}>Allt klart för idag! Bra jobbat!</Alert>}
+      {allDone && <Alert severity="success" variant="outlined">Allt klart för idag. Bra jobbat!</Alert>}
       {overdue.length > 0 && (
         <Box>
-          <Typography variant="h6" color="error" mb={1}>Missat sedan tidigare</Typography>
-          <Stack spacing={1.5}>{overdue.map((a) => <ActivityCard key={a.id} activity={a} />)}</Stack>
+          <SectionTitle color="#C0462F">Missat sedan tidigare</SectionTitle>
+          <Stack spacing={1}>{overdue.map((a) => <ActivityCard key={a.id} activity={a} />)}</Stack>
         </Box>
       )}
       {todays.length === 0 && overdue.length === 0 ? (
-        <Box textAlign="center" py={6} color="text.secondary">
-          <Typography fontSize={56}>🌤️</Typography>
-          <Typography variant="h6">Inget att göra idag</Typography>
-        </Box>
+        <Empty text="Inget att göra idag" />
       ) : (
-        <Stack spacing={1.5}>{todays.map((a) => <ActivityCard key={a.id} activity={a} />)}</Stack>
+        <Box>
+          <SectionTitle>Idag</SectionTitle>
+          <Stack spacing={1}>{todays.map((a) => <ActivityCard key={a.id} activity={a} />)}</Stack>
+        </Box>
       )}
     </Stack>
   )

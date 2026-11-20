@@ -119,7 +119,7 @@ export function ActivityDialog({ target, onClose }: { target: DialogTarget | nul
   return (
     <>
       <Dialog open onClose={onClose} fullScreen={false} scroll="paper">
-        <DialogTitle>{existing ? 'Ändra aktivitet' : 'Ny aktivitet ✨'}</DialogTitle>
+        <DialogTitle>{existing ? 'Ändra aktivitet' : 'Ny aktivitet'}</DialogTitle>
         <DialogContent dividers>
           <Stack spacing={2.5} pt={0.5}>
             {error && <Alert severity="error">{error}</Alert>}
@@ -185,7 +185,7 @@ export function ActivityDialog({ target, onClose }: { target: DialogTarget | nul
             </Box>
 
             <Box>
-              <Typography variant="subtitle2" gutterBottom>Poäng ⭐</Typography>
+              <Typography variant="subtitle2" gutterBottom>Poäng</Typography>
               <Stack direction="row" flexWrap="wrap" gap={1}>
                 {POINT_CHOICES.map((p) => (
                   <Chip
@@ -202,7 +202,7 @@ export function ActivityDialog({ target, onClose }: { target: DialogTarget | nul
             {!existing && (
               <Box>
                 <Chip
-                  label={repeat ? '🔁 Upprepas' : '🔁 Upprepa…'}
+                  label={repeat ? 'Upprepas' : 'Upprepa…'}
                   color={repeat ? 'secondary' : 'default'}
                   variant={repeat ? 'filled' : 'outlined'}
                   onClick={() => setRepeat((r) => !r)}
@@ -236,7 +236,7 @@ export function ActivityDialog({ target, onClose }: { target: DialogTarget | nul
               </Box>
             )}
             {inSeries && (
-              <Typography variant="body2" color="text.secondary">🔁 Den här aktiviteten är en del av en serie.</Typography>
+              <Typography variant="body2" color="text.secondary">Den här aktiviteten är en del av en serie.</Typography>
             )}
 
             <TextField
