@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/src/">
+    <Project Path="src/FamiljeKoll.AppHost/FamiljeKoll.AppHost.csproj" />
     <Project Path="src/FamiljeKoll.Api/FamiljeKoll.Api.csproj" />
     <Project Path="src/FamiljeKoll.Domain/FamiljeKoll.Domain.csproj" />
     <Project Path="src/FamiljeKoll.Repository/FamiljeKoll.Repository.csproj" />
