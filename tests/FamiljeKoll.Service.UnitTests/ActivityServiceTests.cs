@@ -16,8 +16,8 @@ public sealed class ActivityServiceTests : IDisposable
     private readonly FamiljeKollDbContext _db;
     private readonly ActivityService _svc;
     private readonly FakeTimeProvider _time = new(new DateTimeOffset(2026, 11, 20, 12, 0, 0, TimeSpan.Zero));
-    private readonly Member _ella = new() { Name = "Ella", Color = "#FFD54F", Emoji = "🧒" };
-    private readonly Member _max = new() { Name = "Max", Color = "#81C784", Emoji = "👦" };
+    private readonly Member _ella = new() { Name = "Ella", Color = "#FFD54F" };
+    private readonly Member _max = new() { Name = "Max", Color = "#81C784" };
 
     public ActivityServiceTests()
     {

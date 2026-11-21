@@ -4,7 +4,6 @@ export interface Member {
   id: string
   name: string
   color: string
-  emoji: string
   sortOrder: number
   isArchived: boolean
 }
@@ -13,7 +12,6 @@ export interface Category {
   id: string
   name: string
   color: string
-  emoji: string
   sortOrder: number
 }
 

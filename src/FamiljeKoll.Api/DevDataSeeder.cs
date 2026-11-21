@@ -13,10 +13,10 @@ public static class DevDataSeeder
 
         var members = new[]
         {
-            new Member { Name = "Mamma", Color = "#F06292", Emoji = "👩", SortOrder = 1 },
-            new Member { Name = "Pappa", Color = "#4DD0E1", Emoji = "👨", SortOrder = 2 },
-            new Member { Name = "Ella", Color = "#FFD54F", Emoji = "🧒", SortOrder = 3 },
-            new Member { Name = "Max", Color = "#81C784", Emoji = "👦", SortOrder = 4 },
+            new Member { Name = "Mamma", Color = "#F06292", SortOrder = 1 },
+            new Member { Name = "Pappa", Color = "#4DD0E1", SortOrder = 2 },
+            new Member { Name = "Ella", Color = "#FFD54F", SortOrder = 3 },
+            new Member { Name = "Max", Color = "#81C784", SortOrder = 4 },
         };
         db.Members.AddRange(members);
 

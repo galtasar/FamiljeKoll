@@ -8,7 +8,6 @@ public class SaveMemberDto
 {
     [Required, StringLength(50, MinimumLength = 1)] public string Name { get; set; } = string.Empty;
     [Required, RegularExpression("^#[0-9A-Fa-f]{6}$")] public string Color { get; set; } = string.Empty;
-    [Required, StringLength(16, MinimumLength = 1)] public string Emoji { get; set; } = string.Empty;
     [Range(0, 1000)] public int SortOrder { get; set; }
     public bool IsArchived { get; set; }
 }
@@ -17,7 +16,6 @@ public class SaveCategoryDto
 {
     [Required, StringLength(50, MinimumLength = 1)] public string Name { get; set; } = string.Empty;
     [Required, RegularExpression("^#[0-9A-Fa-f]{6}$")] public string Color { get; set; } = string.Empty;
-    [Required, StringLength(16, MinimumLength = 1)] public string Emoji { get; set; } = string.Empty;
     [Range(0, 1000)] public int SortOrder { get; set; }
 }
 

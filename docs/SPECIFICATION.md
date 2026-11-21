@@ -12,8 +12,8 @@ Inspirerat av CareCalendar (veckokalender, återkommande uppgifter) men varmare 
 ### Ingår (v1)
 - Aktiviteter: enstaka eller återkommande, med datum, titel, valfri anteckning.
 - Ansvariga: noll, en, flera eller hela familjen (ingen vald = gäller alla/ingen särskild).
-- Kategorier: skapa, ändra, ta bort i appen. Har namn, färg och emoji.
-- Familjemedlemmar: skapa, ändra, arkivera. Har namn, färg och emoji/avatar.
+- Kategorier: skapa, ändra, ta bort i appen. Har namn och färg.
+- Familjemedlemmar: skapa, ändra, arkivera. Har namn och färg (avataren visar namnets första bokstav).
 - Status: **klar / inte klar**. Aktivitet vars datum passerat och som inte är klar visas som "försenad" (endast visuellt, lagras inte).
 - Poäng: aktivitet har valfria poäng (0 = inga). Poäng räknas per medlem.
 - Vyer: **Idag**, **Vecka** (mån–sön), **Kommande** (lista).
@@ -28,8 +28,8 @@ integrationer med externa kalendrar, egna inloggningar för barn. Läggs till f�
 
 | Entitet | Fält |
 |---|---|
-| `Member` | Id (GUID), Name, Color, Emoji, SortOrder, IsArchived |
-| `Category` | Id (GUID), Name, Color, Emoji, SortOrder |
+| `Member` | Id (GUID), Name, Color, SortOrder, IsArchived |
+| `Category` | Id (GUID), Name, Color, SortOrder |
 | `Activity` | Id (GUID), Title, Notes?, Date (DateOnly), IsDone, DoneAt?, CompletedByMemberId?, Points (int ≥ 0), CategoryId?, RecurringPatternId? |
 | `ActivityMember` | ActivityId, MemberId (många-till-många) |
 | `RecurringPattern` | Id (GUID), Frequency (`Days`/`Weeks`/`Months`), Interval (≥ 1), EndDate? |
@@ -64,7 +64,7 @@ GET   /health, /alive                          (anonyma)
 Alla övriga endpoints kräver autentisering och tillåten e-post. Servervalidering av all input.
 
 ## 5. Vyer och flöden
-- **Idag (startsida):** dagens aktiviteter som stora kort med medlemsfärg, kategori-emoji och stor klar-knapp. Försenade överst.
+- **Idag (startsida):** dagens aktiviteter som stora kort med medlemsfärg, kategorifärg och stor klar-knapp. Försenade överst.
 - **Vecka:** sju kolumner (mån–sön) på dator/platta; på telefon en dag i taget med svep/pilar. Navigering: förra/nästa vecka + "Idag".
 - **Kommande:** kronologisk lista, grupperad per dag.
 - **Ny aktivitet:** stor "+"-knapp. Formulär: titel, datum, ansvariga (medlemschips; ingen vald = alla), kategori, upprepning (Aldrig/Var N dag/vecka/månad + slutdatum), poäng, anteckning.

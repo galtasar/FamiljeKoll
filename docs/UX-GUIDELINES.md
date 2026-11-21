@@ -17,7 +17,7 @@ Barn ska förstå utan att läsa mycket: bild + kort text.
 - Mörkt läge: ej i v1.
 
 ## Komponenter
-- Aktivitetskort: kategori-emoji, titel, ansvarigas färgade avatarer, poäng (⭐), stor klar-ruta. Klart = överstruket/dämpat + liten ✔-animation.
+- Aktivitetskort: kategorifärg, titel, ansvarigas färgade avatarer, poäng (⭐), stor klar-ruta. Klart = överstruket/dämpat + liten ✔-animation.
 - Försenat: varm röd/orange kant + texten "Försenad".
 - Stor flytande "+"-knapp för ny aktivitet.
 - Formulär med få fält; avancerat (upprepning, poäng, anteckning) i hopfällbar sektion.

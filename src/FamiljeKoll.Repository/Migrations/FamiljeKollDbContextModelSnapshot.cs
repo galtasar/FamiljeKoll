@@ -16,7 +16,7 @@ partial class FamiljeKollDbContextModelSnapshot : ModelSnapshot
     // If you encounter a merge conflict in the line below, it means you need to
     // discard one of the migration branches and recreate its migrations on top of
     // the other branch. See https://aka.ms/efcore-docs-migrations-conflicts for more info.
-    public override string LastMigrationId => "20261120203957_InitialCreate";
+    public override string LastMigrationId => "20261121225934_RemoveEmoji";
 
     protected override void BuildModel(ModelBuilder modelBuilder)
     {
@@ -100,11 +100,6 @@ partial class FamiljeKollDbContextModelSnapshot : ModelSnapshot
                     .HasMaxLength(9)
                     .HasColumnType("nvarchar(9)");
 
-                b.Property<string>("Emoji")
-                    .IsRequired()
-                    .HasMaxLength(16)
-                    .HasColumnType("nvarchar(16)");
-
                 b.Property<string>("Name")
                     .IsRequired()
                     .HasMaxLength(50)
@@ -122,7 +117,6 @@ partial class FamiljeKollDbContextModelSnapshot : ModelSnapshot
                     {
                         Id = new Guid("00000000-0000-0000-0000-000000000001"),
                         Color = "#FF8A65",
-                        Emoji = "🏠",
                         Name = "Hem",
                         SortOrder = 1
                     },
@@ -130,7 +124,6 @@ partial class FamiljeKollDbContextModelSnapshot : ModelSnapshot
                     {
                         Id = new Guid("00000000-0000-0000-0000-000000000002"),
                         Color = "#4DD0E1",
-                        Emoji = "🧹",
                         Name = "Städ",
                         SortOrder = 2
                     },
@@ -138,7 +131,6 @@ partial class FamiljeKollDbContextModelSnapshot : ModelSnapshot
                     {
                         Id = new Guid("00000000-0000-0000-0000-000000000003"),
                         Color = "#81C784",
-                        Emoji = "🌱",
                         Name = "Trädgård",
                         SortOrder = 3
                     },
@@ -146,7 +138,6 @@ partial class FamiljeKollDbContextModelSnapshot : ModelSnapshot
                     {
                         Id = new Guid("00000000-0000-0000-0000-000000000004"),
                         Color = "#7986CB",
-                        Emoji = "🚗",
                         Name = "Bil",
                         SortOrder = 4
                     },
@@ -154,7 +145,6 @@ partial class FamiljeKollDbContextModelSnapshot : ModelSnapshot
                     {
                         Id = new Guid("00000000-0000-0000-0000-000000000005"),
                         Color = "#FFD54F",
-                        Emoji = "📚",
                         Name = "Skola",
                         SortOrder = 5
                     },
@@ -162,7 +152,6 @@ partial class FamiljeKollDbContextModelSnapshot : ModelSnapshot
                     {
                         Id = new Guid("00000000-0000-0000-0000-000000000006"),
                         Color = "#F06292",
-                        Emoji = "🍽️",
                         Name = "Mat",
                         SortOrder = 6
                     },
@@ -170,7 +159,6 @@ partial class FamiljeKollDbContextModelSnapshot : ModelSnapshot
                     {
                         Id = new Guid("00000000-0000-0000-0000-000000000007"),
                         Color = "#A1887F",
-                        Emoji = "⭐",
                         Name = "Övrigt",
                         SortOrder = 7
                     });
@@ -186,11 +174,6 @@ partial class FamiljeKollDbContextModelSnapshot : ModelSnapshot
                     .IsRequired()
                     .HasMaxLength(9)
                     .HasColumnType("nvarchar(9)");
-
-                b.Property<string>("Emoji")
-                    .IsRequired()
-                    .HasMaxLength(16)
-                    .HasColumnType("nvarchar(16)");
 
                 b.Property<bool>("IsArchived")
                     .HasColumnType("bit");
