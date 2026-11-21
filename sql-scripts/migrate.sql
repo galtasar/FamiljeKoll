@@ -154,3 +154,42 @@ END;
 COMMIT;
 GO
 
+BEGIN TRANSACTION;
+IF NOT EXISTS (
+    SELECT * FROM [__EFMigrationsHistory]
+    WHERE [MigrationId] = N'20261121225934_RemoveEmoji'
+)
+BEGIN
+    DECLARE @var nvarchar(max);
+    SELECT @var = QUOTENAME(OBJECT_NAME([c].[default_object_id]))
+    FROM [sys].[columns] [c]
+    WHERE [c].[object_id] = OBJECT_ID(N'[Members]') AND [c].[name] = N'Emoji';
+    IF @var IS NOT NULL EXEC(N'ALTER TABLE [Members] DROP CONSTRAINT ' + @var + ';');
+    ALTER TABLE [Members] DROP COLUMN [Emoji];
+END;
+
+IF NOT EXISTS (
+    SELECT * FROM [__EFMigrationsHistory]
+    WHERE [MigrationId] = N'20261121225934_RemoveEmoji'
+)
+BEGIN
+    DECLARE @var1 nvarchar(max);
+    SELECT @var1 = QUOTENAME(OBJECT_NAME([c].[default_object_id]))
+    FROM [sys].[columns] [c]
+    WHERE [c].[object_id] = OBJECT_ID(N'[Categories]') AND [c].[name] = N'Emoji';
+    IF @var1 IS NOT NULL EXEC(N'ALTER TABLE [Categories] DROP CONSTRAINT ' + @var1 + ';');
+    ALTER TABLE [Categories] DROP COLUMN [Emoji];
+END;
+
+IF NOT EXISTS (
+    SELECT * FROM [__EFMigrationsHistory]
+    WHERE [MigrationId] = N'20261121225934_RemoveEmoji'
+)
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20261121225934_RemoveEmoji', N'11.0.0');
+END;
+
+COMMIT;
+GO
+

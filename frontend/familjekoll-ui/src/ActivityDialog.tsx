@@ -148,7 +148,7 @@ export function ActivityDialog({ target, onClose }: { target: DialogTarget | nul
                   return (
                     <Chip
                       key={m.id}
-                      label={`${m.emoji} ${m.name}`}
+                      label={m.name}
                       onClick={() => toggleMember(m.id)}
                       sx={{
                         bgcolor: on ? m.color : 'transparent',
@@ -170,7 +170,7 @@ export function ActivityDialog({ target, onClose }: { target: DialogTarget | nul
                   return (
                     <Chip
                       key={c.id}
-                      label={`${c.emoji} ${c.name}`}
+                      label={c.name}
                       onClick={() => setCategoryId(on ? null : c.id)}
                       sx={{
                         bgcolor: on ? c.color : 'transparent',

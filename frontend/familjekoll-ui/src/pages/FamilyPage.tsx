@@ -72,24 +72,24 @@ export function FamilyPage() {
   const opts = { onSuccess: close, onError: fail }
 
   const initial = useMemo<EditValue>(() => {
-    if (!editing) return { name: '', color: '#E0694F', emoji: '' }
+    if (!editing) return { name: '', color: '#E0694F' }
     if (editing.kind === 'member')
       return editing.item
-        ? { name: editing.item.name, color: editing.item.color, emoji: editing.item.emoji, isArchived: editing.item.isArchived }
-        : { name: '', color: '#E0694F', emoji: '👧', isArchived: false }
+        ? { name: editing.item.name, color: editing.item.color, isArchived: editing.item.isArchived }
+        : { name: '', color: '#E0694F', isArchived: false }
     return editing.item
-      ? { name: editing.item.name, color: editing.item.color, emoji: editing.item.emoji }
-      : { name: '', color: '#2F9E8F', emoji: '📌' }
+      ? { name: editing.item.name, color: editing.item.color }
+      : { name: '', color: '#2F9E8F' }
   }, [editing])
 
   const save = (v: EditValue) => {
     if (!editing) return
     if (editing.kind === 'member') {
-      const data = { name: v.name.trim(), color: v.color, emoji: v.emoji, isArchived: !!v.isArchived, sortOrder: editing.item?.sortOrder ?? members.length }
+      const data = { name: v.name.trim(), color: v.color, isArchived: !!v.isArchived, sortOrder: editing.item?.sortOrder ?? members.length }
       if (editing.item) memberActions.update.mutate({ id: editing.item.id, data }, opts)
       else memberActions.create.mutate(data, opts)
     } else {
-      const data = { name: v.name.trim(), color: v.color, emoji: v.emoji, sortOrder: editing.item?.sortOrder ?? categories.length }
+      const data = { name: v.name.trim(), color: v.color, sortOrder: editing.item?.sortOrder ?? categories.length }
       if (editing.item) categoryActions.update.mutate({ id: editing.item.id, data }, opts)
       else categoryActions.create.mutate(data, opts)
     }
@@ -121,7 +121,7 @@ export function FamilyPage() {
             <Chip
               key={m.id}
               onClick={() => setEditing({ kind: 'member', item: m })}
-              label={`${m.emoji} ${m.name}${m.isArchived ? ' (dold)' : ''}`}
+              label={`${m.name}${m.isArchived ? ' (dold)' : ''}`}
               sx={{ bgcolor: `color-mix(in srgb, ${m.color} 20%, #fff)`, border: `1px solid ${m.color}`, color: 'text.primary', minHeight: 40, fontSize: 15, opacity: m.isArchived ? 0.5 : 1 }}
             />
           ))}
@@ -138,7 +138,7 @@ export function FamilyPage() {
             <Chip
               key={c.id}
               onClick={() => setEditing({ kind: 'category', item: c })}
-              label={`${c.emoji} ${c.name}`}
+              label={c.name}
               sx={{ bgcolor: `color-mix(in srgb, ${c.color} 20%, #fff)`, border: `1px solid ${c.color}`, color: 'text.primary', minHeight: 40, fontSize: 15 }}
             />
           ))}
@@ -147,7 +147,6 @@ export function FamilyPage() {
 
       <EditEntityDialog
         open={!!editing}
-        kind={editing?.kind ?? 'member'}
         title={editing?.item ? 'Ändra' : editing?.kind === 'category' ? 'Ny kategori' : 'Ny medlem'}
         initial={initial}
         onClose={close}

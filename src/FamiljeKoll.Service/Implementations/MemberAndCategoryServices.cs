@@ -38,7 +38,6 @@ public class MemberService(IMemberRepository members) : IMemberService
     {
         m.Name = dto.Name.Trim();
         m.Color = dto.Color;
-        m.Emoji = dto.Emoji.Trim();
         m.SortOrder = dto.SortOrder;
         m.IsArchived = dto.IsArchived;
     }
@@ -78,7 +77,6 @@ public class CategoryService(ICategoryRepository categories) : ICategoryService
     {
         c.Name = dto.Name.Trim();
         c.Color = dto.Color;
-        c.Emoji = dto.Emoji.Trim();
         c.SortOrder = dto.SortOrder;
     }
 }
